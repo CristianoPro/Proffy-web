@@ -5,10 +5,12 @@ import Input from "../../components/Input";
 import Textarea from '../../components/Textarea';
 import Select from '../../components/Select';
 
+import api from '../../services/api';
+
 import warningIcon from '../../assets/images/icons/warning.svg'
 
 import './styles.css'
-import api from '../../services/api';
+
 
 function TeacherForm() {  
   const history = useHistory();

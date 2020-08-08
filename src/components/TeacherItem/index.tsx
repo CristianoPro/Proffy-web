@@ -1,33 +1,59 @@
 import React from 'react'
-
 import whatsappIcon from "../../assets/images/icons/whatsapp.svg";
+import api from '../../services/api';
 
 import './styles.css'
 
-function TeacherItem() {
+
+export interface Teacher {
+    id: number,
+    subject: string,
+    cost: number,
+    name: string,
+    avatar: string, 
+    whatsapp: string,
+    bio: string;
+}
+
+interface TeacherItemProps {
+  teacher: Teacher
+}
+
+const TeacherItem: React.FC<TeacherItemProps>= ({ teacher }) => {
+
+  function createNewConnection() {
+    api.post('connections', {
+      user_id: teacher.id
+    })
+  }
+
   return(
     <article className="teacher-item">
           <header>
             <img
-              src="https://instagram.fcgh43-1.fna.fbcdn.net/v/t51.2885-19/s150x150/76879952_570984313459722_1977255372297076736_n.jpg?_nc_ht=instagram.fcgh43-1.fna.fbcdn.net&_nc_ohc=sN9xKA66D7AAX_vm42S&oh=e501164d6ffcf55a0154be30f733c97c&oe=5F514A0D"
-              alt="Cristiano Oliveira"
+              src={teacher.avatar}
+              alt={teacher.name}
             />
             <div>
-              <strong>Cristiano Oliveira</strong>
-              <span>Química</span>
+              <strong>{teacher.name}</strong>
+              <span>{teacher.subject}</span>
             </div>
           </header>
           <div>
-            <p>cansado demais para copiar o texto e colar aqui!</p>
+            <p>{teacher.bio}</p>
             <footer>
               <p>
                 Preço/hora
-                <strong>R$ 100,00</strong>
+                <strong>{teacher.cost}</strong>
               </p>
-              <button type="button">
+              <a
+                target="_blank" 
+                onClick={createNewConnection} 
+                href={`https://wa.me/${teacher.whatsapp}`}
+              >
                 <img src={whatsappIcon} alt="whatsapp" />
                 Entrar em contato
-              </button>
+              </a>
             </footer>
           </div>
     </article>
